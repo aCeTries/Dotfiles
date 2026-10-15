@@ -1,5 +1,5 @@
 My Arch Linux Setup
-A short overview of my Linux desktop setup, intended to help someone understand what I use and how a few parts are configured. This README records details I have confirmed or discussed; it does not assume that every optional component is installed or configured.
+A short overview of my Linux desktop setup, intended to help someone understand what I use and how a few parts are configured. 
 At a glance
 Component	Setup / notes
 Operating system	Arch Linux
