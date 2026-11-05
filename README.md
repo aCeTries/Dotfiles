@@ -61,13 +61,14 @@ The monitor module currently targets the built-in `eDP-1` laptop panel at prefer
 
 ### Optional power profiles
 
-If you want to use `power-profiles-daemon`, first check whether TLP is already active:
+Check which power-management tools are already installed or running before adding another:
 
 ```bash
-systemctl is-active tlp.service
+pacman -Qs 'tlp|power-profiles-daemon|auto-cpufreq|tuned'
+systemctl is-active tlp.service power-profiles-daemon.service auto-cpufreq.service tuned.service
 ```
 
-Do not run TLP and power-profiles-daemon together. If TLP is not in use, you can install and enable power-profiles-daemon:
+Avoid running multiple tools that manage CPU/platform power profiles at the same time. If you already use TLP, auto-cpufreq, or tuned, keep that manager and configure it rather than adding power-profiles-daemon. If none is installed or active, you can consider power-profiles-daemon:
 
 ```bash
 sudo pacman -S power-profiles-daemon
@@ -76,7 +77,7 @@ powerprofilesctl list
 powerprofilesctl set power-saver
 ```
 
-Use `powerprofilesctl set balanced` when you want the balanced profile again. Available profiles depend on laptop firmware and hardware support.
+Use `powerprofilesctl set balanced` to return to the balanced profile. Available profiles depend on laptop firmware and hardware support. Do not install or enable it until the checks above are clear.
 
 ### Useful diagnostics
 
