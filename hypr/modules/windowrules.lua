@@ -1,0 +1,1 @@
+-- No custom window rules were enabled in the previous setup.
