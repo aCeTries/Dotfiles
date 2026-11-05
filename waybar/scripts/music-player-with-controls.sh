@@ -15,16 +15,16 @@ if [ "$status" = "Playing" ] || [ "$status" = "Paused" ]; then
     
     # Determine play/pause icon
     if [ "$status" = "Playing" ]; then
-        play_icon="⏸️"
+        play_icon="⏸"
         song_icon="🎵"
     else
-        play_icon="▶️"
-        song_icon="⏸️"
+        play_icon="▶"
+        song_icon="⏸"
     fi
     
     # Display format with control buttons
     echo "$song_icon $artist - $title
-⏮️ $play_icon ⏭️"
+⏮ $play_icon ⏭"
 else
     # No music playing, show nothing
     exit 0

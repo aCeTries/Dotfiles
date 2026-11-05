@@ -17,7 +17,7 @@ if [ "$status" = "Playing" ] || [ "$status" = "Paused" ]; then
     if [ "$status" = "Playing" ]; then
         icon="🎵"
     else
-        icon="⏸️"
+        icon="⏸"
     fi
     
     # Display format

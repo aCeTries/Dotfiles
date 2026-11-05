@@ -1,53 +1,55 @@
 * {
   font-family: "Pixeloid Sans";
   background: transparent;
-  background-color: #121212;
-  color: #fdfbfc;
+  background-color: #fdfbfc; /* light background */
+  color: #121212; /* dark text for light theme */
   border-radius: 10px;
-
 }
 
 #window {
-  color: #bfbbbe;
-  border-color: #fdfbfc;
+  color: #3a3a3a; /* darker gray for text inside window */
+  border-color: #121212; /* dark border */
   border-style: solid;
   border-width: 1px;
 
-  /*Linear gradient background instead of standard background, because it makes cleaner border-radius cuts, issa bug :p*/
-  background-image: linear-gradient(to bottom, #020307 100%);
+  /* linear gradient for smoother borders */
+  background-image: linear-gradient(to bottom, #ffffff 100%); /* light background */
   border-radius: 14px;
 }
+
 #scroll {
   border-top-style: solid;
   border-width: 1px;
-  border-color: #fdfbfc;
+  border-color: #121212;
 }
+
 #inner-box {
   padding-top: 12px;
 }
+
 #entry {
   border-style: none;
-  border-color: #fdfbfc;
-  color: #bfbbbe;
+  border-color: #121212;
+  color: #3a3a3a; /* darker text */
   padding: 6px;
   margin-bottom: 8px;
   margin-left: 12px;
-  margin-right: 12;
+  margin-right: 12px;
 
   border-radius: 12px;
 }
 
 #entry:selected {
-  background: #27232b;
-  color: #bfbbbe;
+  background: #bfbbbe; /* swap previous dark selection */
+  color: #27232b; /* darker text when selected */
   font-weight: bold;
   outline: none;
 }
 
 #input {
-  background-color: #020307;
-  color: #bfbbbe;
-  border-color: #fdfbfc;
+  background-color: #ffffff; /* light input background */
+  color: #27232b; /* dark text */
+  border-color: #121212;
 
   border-style: none;
   border-bottom-style: solid;
@@ -55,17 +57,17 @@
 
   font-style: normal;
 
-  border-radius: 8;
+  border-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
   padding: 12px;
   margin: 8px;
 }
+
 #input:focus {
-  background: #27232b;
-  background-color: #27232b;
-  border-color: #fdfbfc;
+  background: #f0f0f0; /* slightly darker than white for focus */
+  border-color: #121212;
   font-style: italic;
 }
 

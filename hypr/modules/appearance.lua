@@ -1,4 +1,5 @@
--- Core layout, borders, opacity, shadows and GPU-conscious blur.
+-- Core layout, borders, opacity, shadows and blur.
+
 hl.config({
     general = {
         gaps_in = 2,
@@ -20,7 +21,7 @@ hl.config({
         shadow = {
             enabled = true,
             range = 16,
-            render_power = 4,
+            render_power = 4, -- Hyprland 0.57 caps this at 4.
             color = "rgba(00000033)",
         },
 
@@ -31,7 +32,7 @@ hl.config({
             vibrancy = 0.1696,
             new_optimizations = true,
             xray = false,
-            -- Keep the default Kawase variant: avoid heavier shader variants.
+            -- Keep the default Kawase variant for a lighter GPU workload.
         },
 
         wobble = {
@@ -44,8 +45,13 @@ hl.config({
         },
     },
 
-    dwindle = { preserve_split = true },
-    master = { new_status = "master" },
+    dwindle = {
+        preserve_split = true,
+    },
+
+    master = {
+        new_status = "master",
+    },
 
     misc = {
         force_default_wallpaper = 1,

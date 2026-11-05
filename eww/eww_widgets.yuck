@@ -1,39 +1,28 @@
 (include "eww_vars.yuck")
 
+
 (defwidget userinfobox []
-  (centerbox :height "100" :width "340" :halign "center" :valign "center" :class "userinfo-parent"
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
-      (button :onclick "kitty & disown" :class "button"
-        (label :class "icon-label"  :text "⌘")
-      )
-    )
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
-      (button :onclick "GTK_THEME=diinki-retro-dark nautilus & disown"  :class "button"
-        (label :class "icon-label"  :text "🗀")
-      )
-    )
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+    (box :height "30" :width "53" :halign "center" :valign "center" :class "userinfo-child"
       (button :onclick "eww open powermenu" :class "button"
         (label :class "icon-label"  :text "⭘")
       )
     )
   )
-)
 
 
 (defwidget powermenu []
-  (centerbox :height "100" :width "340" :halign "center" :valign "center" :class "userinfo-parent"
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+  (centerbox :height "30" :width "160" :halign "center" :valign "center" :class "userinfo-parent"
+    (box :height "30" :width "53" :halign "center" :valign "center" :class "userinfo-child"
       (button :onclick "systemctl poweroff" :class "poweroff-button"
         (label :class "icon-label"  :text "⏻")
       )
     )
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
-      (button :onclick "systemctl reboot"  :class "reboot-button"
-        (label :class "icon-label"  :text "🔄")
+    (box :height "30" :width "53" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "systemctl reboot"  :class "suspend-button"
+        (label :class "icon-label"  :text "⭮")
       )
     )
-    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+    (box :height "30" :width "53" :halign "center" :valign "center" :class "userinfo-child"
       (button :onclick "eww close powermenu" :class "button"
         (label :class "icon-label"  :text "⨯")
       )

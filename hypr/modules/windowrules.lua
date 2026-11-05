@@ -1,1 +1,7 @@
--- No custom window rules were enabled in the previous setup.
+-- No custom window rules were enabled in your previous config.
+-- Add rules here as needed, e.g.:
+-- hl.window_rule({
+--     match = { class = "some-app" },
+--     float = true,
+--     center = true,
+-- })
