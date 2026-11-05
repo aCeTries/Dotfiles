@@ -1,72 +1,97 @@
-My Arch Linux Setup
-A short overview of my Linux desktop setup, intended to help someone understand what I use and how a few parts are configured. 
-At a glance
-Component	Setup / notes
-Operating system	Arch Linux
-CPU	AMD Ryzen 5 4600H with Radeon Graphics
-Architecture	x86_64
-Discrete GPU	NVIDIA GeForce GTX 1650 Mobile / Max-Q (TU117M); kernel driver: nvidia
-Integrated GPU	AMD Radeon Vega / Renoir graphics; kernel driver: amdgpu
-Physical memory	8 GB RAM
-Swap	3.6 GB zram swap device (/dev/zram0)
-Main storage	476.9 GB NVMe drive (/dev/nvme0n1)
-Linux root filesystem	194.3 GB ext4 partition mounted at /
-Linux boot partition	1 GB vfat partition mounted at /boot
-Dotfiles repository	aCeTries/Dotfiles on GitHub
-Other operating system	Windows; the machine is dual-booted with Linux and Windows
-Window manager / compositor	Hyprland
-Display server protocol	Wayland
-Animated wallpaper	mpvpaper
-Wallpaper preference	Video wallpaper; I experimented with a portrait video filling a landscape display, accepting cropping
-Terminal emulator	Kitty
-UI font	Pixeloid Sans
-File manager	Dolphin
-Application launcher	Wofi
-Status bar / taskbar	Waybar
-Lock screen	Hyprlock, with custom scripts
-Battery reminder	Custom low-battery reminder script
-Power menu	Custom Eww interface with power-off and restart buttons
-Shell prompt	Starship has come up in my Linux ricing/setup discussions; confirm whether it is part of the current Arch install
-Previous Linux desktop	Linux Mint with Cinnamon was part of my earlier Linux setup/ricing history
+# Arch Linux Dotfiles
 
+Personal dotfiles for an Arch Linux laptop running Hyprland on Wayland.
 
-Hardware specifications
-Collected from the system information supplied for this README. GPU names and drivers are based on lspci -k; partition sizes and mount points are based on lsblk.
-Processor
-- Model: AMD Ryzen 5 4600H with Radeon Graphics
-- Architecture: x86_64
-Graphics
-This system has hybrid graphics: integrated AMD graphics plus a discrete NVIDIA GPU.
-GPU	Device	Kernel driver in use
-Discrete	NVIDIA TU117M / GeForce GTX 1650 Mobile / Max-Q	nvidia
-Integrated	AMD Renoir / Radeon Vega Series (Radeon Vega Mobile Series)	amdgpu
+## Hardware
 
+| Component | Details |
+|---|---|
+| CPU | AMD Ryzen 5 4600H with Radeon Graphics |
+| Integrated GPU | AMD Radeon Vega / Renoir (amdgpu) |
+| Discrete GPU | NVIDIA GeForce GTX 1650 Mobile / Max-Q (TU117M) |
+| Memory | 8 GB RAM with zram swap |
+| Storage | NVMe SSD |
+| Other OS | Windows (dual boot) |
 
-The reported NVIDIA kernel modules include nouveau, nvidia_drm, and nvidia; the active driver shown by lspci -k is nvidia. The AMD driver in use is amdgpu. This README does not assume a particular PRIME/offload configuration.
-Memory
-- Physical RAM: 8 GB
-- Swap: 3.6 GB zram device (/dev/zram0)
-The zram device is compressed RAM-backed swap, not a separate physical disk partition.
-Storage and partitions
-The reported main drive is a 476.9 GB NVMe SSD, shown as /dev/nvme0n1. Current partition information supplied for this document: 
-Partition	Size	Filesystem	Mount point	Notes
-/dev/nvme0n1p1	100 MB	vfat	—	Partition purpose not confirmed
-/dev/nvme0n1p2	16 MB	Not reported	—	Partition purpose not confirmed
-/dev/nvme0n1p3	167.7 GB	NTFS	—	Not mounted in the supplied output
-/dev/nvme0n1p4	956 MB	NTFS	—	Partition purpose not confirmed
-/dev/nvme0n1p5	112.3 GB	NTFS	—	Not mounted in the supplied output
-/dev/nvme0n1p6	1 GB	vfat	/boot	Linux boot partition
-/dev/nvme0n1p7	194.3 GB	ext4	/	Linux root filesystem
+## Desktop
 
+- **Compositor:** Hyprland (Lua configuration, 0.57+)
+- **Terminal:** Kitty
+- **File manager:** Dolphin
+- **Launcher:** Wofi
+- **Bar:** Waybar
+- **Widgets:** Eww
+- **Lock screen / idle:** Hyprlock and Hypridle
+- **Font:** Pixeloid Sans
+- **Wallpaper:** mpvpaper video wallpaper
 
-The machine dual-boots Arch Linux and Windows, and the NTFS partitions are consistent with Windows-accessible partitions. Their exact roles and which one contains the Windows installation have not been confirmed, so they are not labelled more specifically here. Mount points above reflect the output shared and may differ from the current live system.
-Dotfiles and customization source
-The customization files are collected in the public GitHub repository: aCeTries/Dotfiles. Use that repository as the primary source for the actual configuration files and scripts; this README is an overview and does not reproduce every file.
-The UI font I use is Pixeloid Sans.
-Desktop environment
-I use Hyprland on Wayland rather than a traditional desktop environment such as Cinnamon. Hyprland's configuration is typically stored in:
-~/.config/hypr/hyprland.conf
-To reload Hyprland after changing its configuration:
+## Repository layout
+
+- `hypr/` — Hyprland Lua entry point, modules, idle/lock configuration and helper scripts.
+- `eww/` — Eww widgets and styles.
+- `kitty/` — Kitty terminal configuration and theme.
+- `waybar/` — Waybar configuration, styles and scripts.
+- `wofi/` — Wofi configuration and styles.
+- `scripts/` — shared helper scripts.
+- `wallpaper/` — static wallpaper assets.
+
+The old Hyprland 0.56-and-earlier configuration is retained at `hypr/legacy/hyprland.conf` for reference. Hyprland 0.57+ uses `hypr/hyprland.lua`.
+
+## Hyprland setup
+
+Copy the contents of `hypr/` into `~/.config/hypr/`. Keep any local-only assets (for example `sounds/intro.wav`) in place. The Lua entry point loads settings from `modules/`.
+
+After copying, check:
+
+```bash
 hyprctl reload
-Dual boot
-The computer dual-boots Arch Linux and Windows on the reported NVMe drive. The supplied partition layout is documented in the Hardware specifications section. The bootloader and exact Windows partition assignment have not been confirmed.
+hyprctl configerrors
+hyprctl monitors all
+```
+
+The monitor module currently targets the built-in `eDP-1` laptop panel at preferred mode and scale 1.0. Change it if your output name differs.
+
+## Performance and battery
+
+- Blur uses one pass, a small radius, and Hyprland's optimised blur path. The default Kawase variant is retained instead of heavier shader variants.
+- The wobble effect is intentionally subtle.
+- `scripts/wallpaper-power.sh` runs the animated wallpaper on AC power and stops it while a battery reports `Discharging`. It checks every 30 seconds and restarts the wallpaper when AC power returns.
+- The wallpaper path expected by the script is `~/Pictures/Wallpapers/video2.mp4`.
+- Hyprland starts the wallpaper watcher and the unlock-sound watcher at session startup.
+
+### Optional power profiles
+
+Check which power-management tools are already installed or running before adding another:
+
+```bash
+pacman -Qs 'tlp|power-profiles-daemon|auto-cpufreq|tuned'
+systemctl is-active tlp.service power-profiles-daemon.service auto-cpufreq.service tuned.service
+```
+
+Avoid running multiple tools that manage CPU/platform power profiles at the same time. If you already use TLP, auto-cpufreq, or tuned, keep that manager and configure it rather than adding power-profiles-daemon. If none is installed or active, you can consider power-profiles-daemon:
+
+```bash
+sudo pacman -S power-profiles-daemon
+sudo systemctl enable --now power-profiles-daemon.service
+powerprofilesctl list
+powerprofilesctl set power-saver
+```
+
+Use `powerprofilesctl set balanced` to return to the balanced profile. Available profiles depend on laptop firmware and hardware support. Do not install or enable it until the checks above are clear.
+
+### Useful diagnostics
+
+```bash
+powerprofilesctl get
+nvidia-smi
+cat /sys/class/power_supply/BAT0/status
+cat /sys/class/power_supply/BAT0/capacity
+```
+
+For the NVIDIA GPU's runtime-power state, find its PCI device and inspect `power/runtime_status` and `power/control` under `/sys/bus/pci/devices/<device>/`. Do not force runtime power-management settings until the current driver and device state have been checked.
+
+## Notes
+
+- The configuration preserves the established ALT-based keybindings. `ALT+S` focuses down; `ALT+CTRL+S` toggles the `magic` special workspace.
+- The unlock-sound watcher expects `pw-play` and `~/.config/hypr/sounds/intro.wav`.
+- Other referenced utilities include `nm-applet`, `waybar`, `hypridle`, Eww, `wpctl`, `brightnessctl`, `playerctl`, and `hyprshot`.
